@@ -1,0 +1,2903 @@
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="op">!</span>pip install numpy pandas matplotlib seaborn scikit<span class="op">-</span>learn</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code></pre></div>
+<pre><code>Requirement already satisfied: numpy in /usr/local/lib/python3.12/dist-packages (2.0.2)
+,Requirement already satisfied: pandas in /usr/local/lib/python3.12/dist-packages (2.2.2)
+,Requirement already satisfied: matplotlib in /usr/local/lib/python3.12/dist-packages (3.10.0)
+,Requirement already satisfied: seaborn in /usr/local/lib/python3.12/dist-packages (0.13.2)
+,Requirement already satisfied: scikit-learn in /usr/local/lib/python3.12/dist-packages (1.6.1)
+,Requirement already satisfied: python-dateutil&gt;=2.8.2 in /usr/local/lib/python3.12/dist-packages (from pandas) (2.9.0.post0)
+,Requirement already satisfied: pytz&gt;=2020.1 in /usr/local/lib/python3.12/dist-packages (from pandas) (2025.2)
+,Requirement already satisfied: tzdata&gt;=2022.7 in /usr/local/lib/python3.12/dist-packages (from pandas) (2025.3)
+,Requirement already satisfied: contourpy&gt;=1.0.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (1.3.3)
+,Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (0.12.1)
+,Requirement already satisfied: fonttools&gt;=4.22.0 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (4.61.1)
+,Requirement already satisfied: kiwisolver&gt;=1.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (1.4.9)
+,Requirement already satisfied: packaging&gt;=20.0 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (25.0)
+,Requirement already satisfied: pillow&gt;=8 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (11.3.0)
+,Requirement already satisfied: pyparsing&gt;=2.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (3.3.1)
+,Requirement already satisfied: scipy&gt;=1.6.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (1.16.3)
+,Requirement already satisfied: joblib&gt;=1.2.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (1.5.3)
+,Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn) (3.6.0)
+,Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="im">import</span> gdown</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co"># Google Drive file ID can be extracted from the shared link</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>file_id <span class="op">=</span> <span class="st">&#39;1p5-WVMuHpj9HXEsKNA-v0xmsdRJsN4LU&#39;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>output <span class="op">=</span> <span class="st">&#39;health claims.csv&#39;</span> <span class="co"># Assuming the file is a CSV and naming it appropriately</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>gdown.download(<span class="bu">id</span><span class="op">=</span>file_id, output<span class="op">=</span>output, quiet<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<pre><code>Downloading...
+,From: https://drive.google.com/uc?id=1p5-WVMuHpj9HXEsKNA-v0xmsdRJsN4LU
+,To: /content/health claims.csv
+,100%|██████████| 1.00M/1.00M [00:00&lt;00:00, 22.3MB/s]
+
+
+
+
+
+&#39;health claims.csv&#39;</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>df <span class="op">=</span> pd.read_csv(<span class="st">&#39;health claims.csv&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>display(df.tail())</span></code></pre></div>
+<div id="df-ce0876b9-598e-4878-bb48-ed7a888bee3b" class="colab-df-container">
+<pre><code>&lt;div&gt;</code></pre>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+ClaimID
+</th>
+<th>
+PatientID
+</th>
+<th>
+ProviderID
+</th>
+<th>
+ClaimAmount
+</th>
+<th>
+ClaimDate
+</th>
+<th>
+DiagnosisCode
+</th>
+<th>
+ProcedureCode
+</th>
+<th>
+PatientAge
+</th>
+<th>
+PatientGender
+</th>
+<th>
+ProviderSpecialty
+</th>
+<th>
+ClaimStatus
+</th>
+<th>
+PatientIncome
+</th>
+<th>
+PatientMaritalStatus
+</th>
+<th>
+PatientEmploymentStatus
+</th>
+<th>
+ProviderLocation
+</th>
+<th>
+ClaimType
+</th>
+<th>
+ClaimSubmissionMethod
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+4495
+</th>
+<td>
+82ada51e-65cf-4a59-941f-ef6418021d32
+</td>
+<td>
+5d0159c5-e5ce-4d0e-82cb-c4715d6d5471
+</td>
+<td>
+00d92026-359c-47c4-8351-94470749a98c
+</td>
+<td>
+6140.07
+</td>
+<td>
+07-04-2023
+</td>
+<td>
+mA872
+</td>
+<td>
+VU132
+</td>
+<td>
+57
+</td>
+<td>
+M
+</td>
+<td>
+Orthopedics
+</td>
+<td>
+Approved
+</td>
+<td>
+66383.51
+</td>
+<td>
+Divorced
+</td>
+<td>
+Student
+</td>
+<td>
+Maryburgh
+</td>
+<td>
+Inpatient
+</td>
+<td>
+Phone
+</td>
+</tr>
+<tr>
+<th>
+4496
+</th>
+<td>
+fdc4f785-0c95-4356-a2a6-d835ba3514f0
+</td>
+<td>
+fd66e4f7-a678-4d22-bdf7-72694ea041c0
+</td>
+<td>
+6b6823f0-b5d2-4f94-8651-ededc9b0adb3
+</td>
+<td>
+4932.96
+</td>
+<td>
+05-01-2023
+</td>
+<td>
+dn637
+</td>
+<td>
+Tr490
+</td>
+<td>
+62
+</td>
+<td>
+M
+</td>
+<td>
+Pediatrics
+</td>
+<td>
+Pending
+</td>
+<td>
+122988.21
+</td>
+<td>
+Married
+</td>
+<td>
+Employed
+</td>
+<td>
+East Paulafort
+</td>
+<td>
+Routine
+</td>
+<td>
+Online
+</td>
+</tr>
+<tr>
+<th>
+4497
+</th>
+<td>
+e54522e3-d4c0-4067-a9a7-0c4f945d19c4
+</td>
+<td>
+0a1506fb-68c3-4153-9d72-b01d1d0a6c1c
+</td>
+<td>
+5d3b394f-d861-4778-951b-57783afa4c74
+</td>
+<td>
+1418.50
+</td>
+<td>
+16-11-2023
+</td>
+<td>
+Zu983
+</td>
+<td>
+Tb316
+</td>
+<td>
+27
+</td>
+<td>
+M
+</td>
+<td>
+Pediatrics
+</td>
+<td>
+Denied
+</td>
+<td>
+118556.80
+</td>
+<td>
+Married
+</td>
+<td>
+Student
+</td>
+<td>
+Ramirezhaven
+</td>
+<td>
+Outpatient
+</td>
+<td>
+Phone
+</td>
+</tr>
+<tr>
+<th>
+4498
+</th>
+<td>
+959cc9ab-52e9-4292-bb54-64da1f9c3a95
+</td>
+<td>
+3cba92be-8544-43a4-8ff3-dc8c5244fffd
+</td>
+<td>
+3d7a090c-d44f-4705-93af-0a07aa4d1fca
+</td>
+<td>
+2687.20
+</td>
+<td>
+07-10-2023
+</td>
+<td>
+eo150
+</td>
+<td>
+Wc232
+</td>
+<td>
+64
+</td>
+<td>
+M
+</td>
+<td>
+Neurology
+</td>
+<td>
+Denied
+</td>
+<td>
+138379.63
+</td>
+<td>
+Divorced
+</td>
+<td>
+Retired
+</td>
+<td>
+Port Jessica
+</td>
+<td>
+Emergency
+</td>
+<td>
+Paper
+</td>
+</tr>
+<tr>
+<th>
+4499
+</th>
+<td>
+f7681dee-6505-4b72-a578-3e86b7287a86
+</td>
+<td>
+5e29f1d8-2ca7-4d76-908d-24cbf6b41137
+</td>
+<td>
+95072963-a4e2-4c30-9961-59ecd6b33fbd
+</td>
+<td>
+4249.08
+</td>
+<td>
+26-07-2023
+</td>
+<td>
+DY251
+</td>
+<td>
+gn555
+</td>
+<td>
+43
+</td>
+<td>
+F
+</td>
+<td>
+Neurology
+</td>
+<td>
+Pending
+</td>
+<td>
+21927.92
+</td>
+<td>
+Divorced
+</td>
+<td>
+Employed
+</td>
+<td>
+New Kari
+</td>
+<td>
+Emergency
+</td>
+<td>
+Phone
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre><code>&lt;div class=&quot;colab-df-buttons&quot;&gt;</code></pre>
+<div class="colab-df-container">
+<pre><code>&lt;button class=&quot;colab-df-convert&quot; onclick=&quot;convertToInteractive(&#39;df-ce0876b9-598e-4878-bb48-ed7a888bee3b&#39;)&quot;
+        title=&quot;Convert this dataframe to an interactive table.&quot;
+        style=&quot;display:none;&quot;&gt;</code></pre>
+<p><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"> <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/> </svg> </button></p>
+<style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+<pre><code>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-ce0876b9-598e-4878-bb48-ed7a888bee3b button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-ce0876b9-598e-4878-bb48-ed7a888bee3b&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
+
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;</code></pre>
+</div>
+<pre><code>&lt;/div&gt;</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>df.tail(<span class="dv">10</span>)</span></code></pre></div>
+<div id="df-2492d63b-2ee9-43fc-a834-1cf2fc818913" class="colab-df-container">
+<pre><code>&lt;div&gt;</code></pre>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+ClaimID
+</th>
+<th>
+PatientID
+</th>
+<th>
+ProviderID
+</th>
+<th>
+ClaimAmount
+</th>
+<th>
+ClaimDate
+</th>
+<th>
+DiagnosisCode
+</th>
+<th>
+ProcedureCode
+</th>
+<th>
+PatientAge
+</th>
+<th>
+PatientGender
+</th>
+<th>
+ProviderSpecialty
+</th>
+<th>
+ClaimStatus
+</th>
+<th>
+PatientIncome
+</th>
+<th>
+PatientMaritalStatus
+</th>
+<th>
+PatientEmploymentStatus
+</th>
+<th>
+ProviderLocation
+</th>
+<th>
+ClaimType
+</th>
+<th>
+ClaimSubmissionMethod
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+4490
+</th>
+<td>
+c62cfdf8-616e-4093-88e0-393db5acc700
+</td>
+<td>
+64754503-1497-4d23-b079-f257a019f5b2
+</td>
+<td>
+e9e6f902-dca7-40d3-b5f4-e606a2a870a1
+</td>
+<td>
+2685.51
+</td>
+<td>
+14-03-2023
+</td>
+<td>
+kj432
+</td>
+<td>
+Rn356
+</td>
+<td>
+18
+</td>
+<td>
+F
+</td>
+<td>
+Cardiology
+</td>
+<td>
+Pending
+</td>
+<td>
+134497.32
+</td>
+<td>
+Married
+</td>
+<td>
+Unemployed
+</td>
+<td>
+Lake Terrence
+</td>
+<td>
+Inpatient
+</td>
+<td>
+Online
+</td>
+</tr>
+<tr>
+<th>
+4491
+</th>
+<td>
+fa641037-d7bc-44d4-86e1-9f4ba7a7af81
+</td>
+<td>
+652dba27-8c03-4be5-823e-5b10bbcc01ad
+</td>
+<td>
+81f214cf-e6ae-4fab-94da-2197dc0781d8
+</td>
+<td>
+6980.04
+</td>
+<td>
+16-01-2023
+</td>
+<td>
+Zi245
+</td>
+<td>
+Sf182
+</td>
+<td>
+80
+</td>
+<td>
+F
+</td>
+<td>
+Neurology
+</td>
+<td>
+Pending
+</td>
+<td>
+118495.49
+</td>
+<td>
+Married
+</td>
+<td>
+Student
+</td>
+<td>
+Laurenborough
+</td>
+<td>
+Outpatient
+</td>
+<td>
+Online
+</td>
+</tr>
+<tr>
+<th>
+4492
+</th>
+<td>
+ae1c6a17-5e20-49cf-90f2-0cf3bb2c0aae
+</td>
+<td>
+629b2788-cbdf-4550-8b31-17609ad24ff7
+</td>
+<td>
+72154f09-6dca-494a-ae24-73a3d754aa92
+</td>
+<td>
+5717.17
+</td>
+<td>
+10-03-2023
+</td>
+<td>
+mS764
+</td>
+<td>
+IX028
+</td>
+<td>
+44
+</td>
+<td>
+F
+</td>
+<td>
+Cardiology
+</td>
+<td>
+Approved
+</td>
+<td>
+93251.16
+</td>
+<td>
+Married
+</td>
+<td>
+Retired
+</td>
+<td>
+North Christianside
+</td>
+<td>
+Outpatient
+</td>
+<td>
+Paper
+</td>
+</tr>
+<tr>
+<th>
+4493
+</th>
+<td>
+dd77c963-f10d-41cf-86c7-81a81d828775
+</td>
+<td>
+882011f6-419b-4ef0-a6e4-cedbcc465655
+</td>
+<td>
+9f52ec38-7033-408f-93e4-238bc6c9456e
+</td>
+<td>
+7982.81
+</td>
+<td>
+21-09-2022
+</td>
+<td>
+yw948
+</td>
+<td>
+YG697
+</td>
+<td>
+25
+</td>
+<td>
+M
+</td>
+<td>
+General Practice
+</td>
+<td>
+Denied
+</td>
+<td>
+35600.36
+</td>
+<td>
+Married
+</td>
+<td>
+Retired
+</td>
+<td>
+Ramosmouth
+</td>
+<td>
+Routine
+</td>
+<td>
+Online
+</td>
+</tr>
+<tr>
+<th>
+4494
+</th>
+<td>
+18a395e6-ce7a-4058-a903-a5a706a2006a
+</td>
+<td>
+bf5736f4-fd3d-4f39-ac0d-80f11ed06d73
+</td>
+<td>
+904d8a37-cba3-4b83-b927-77bc543015c4
+</td>
+<td>
+7376.75
+</td>
+<td>
+11-01-2023
+</td>
+<td>
+Rb206
+</td>
+<td>
+Yi318
+</td>
+<td>
+21
+</td>
+<td>
+F
+</td>
+<td>
+General Practice
+</td>
+<td>
+Approved
+</td>
+<td>
+89156.33
+</td>
+<td>
+Divorced
+</td>
+<td>
+Employed
+</td>
+<td>
+Bryanmouth
+</td>
+<td>
+Inpatient
+</td>
+<td>
+Online
+</td>
+</tr>
+<tr>
+<th>
+4495
+</th>
+<td>
+82ada51e-65cf-4a59-941f-ef6418021d32
+</td>
+<td>
+5d0159c5-e5ce-4d0e-82cb-c4715d6d5471
+</td>
+<td>
+00d92026-359c-47c4-8351-94470749a98c
+</td>
+<td>
+6140.07
+</td>
+<td>
+07-04-2023
+</td>
+<td>
+mA872
+</td>
+<td>
+VU132
+</td>
+<td>
+57
+</td>
+<td>
+M
+</td>
+<td>
+Orthopedics
+</td>
+<td>
+Approved
+</td>
+<td>
+66383.51
+</td>
+<td>
+Divorced
+</td>
+<td>
+Student
+</td>
+<td>
+Maryburgh
+</td>
+<td>
+Inpatient
+</td>
+<td>
+Phone
+</td>
+</tr>
+<tr>
+<th>
+4496
+</th>
+<td>
+fdc4f785-0c95-4356-a2a6-d835ba3514f0
+</td>
+<td>
+fd66e4f7-a678-4d22-bdf7-72694ea041c0
+</td>
+<td>
+6b6823f0-b5d2-4f94-8651-ededc9b0adb3
+</td>
+<td>
+4932.96
+</td>
+<td>
+05-01-2023
+</td>
+<td>
+dn637
+</td>
+<td>
+Tr490
+</td>
+<td>
+62
+</td>
+<td>
+M
+</td>
+<td>
+Pediatrics
+</td>
+<td>
+Pending
+</td>
+<td>
+122988.21
+</td>
+<td>
+Married
+</td>
+<td>
+Employed
+</td>
+<td>
+East Paulafort
+</td>
+<td>
+Routine
+</td>
+<td>
+Online
+</td>
+</tr>
+<tr>
+<th>
+4497
+</th>
+<td>
+e54522e3-d4c0-4067-a9a7-0c4f945d19c4
+</td>
+<td>
+0a1506fb-68c3-4153-9d72-b01d1d0a6c1c
+</td>
+<td>
+5d3b394f-d861-4778-951b-57783afa4c74
+</td>
+<td>
+1418.50
+</td>
+<td>
+16-11-2023
+</td>
+<td>
+Zu983
+</td>
+<td>
+Tb316
+</td>
+<td>
+27
+</td>
+<td>
+M
+</td>
+<td>
+Pediatrics
+</td>
+<td>
+Denied
+</td>
+<td>
+118556.80
+</td>
+<td>
+Married
+</td>
+<td>
+Student
+</td>
+<td>
+Ramirezhaven
+</td>
+<td>
+Outpatient
+</td>
+<td>
+Phone
+</td>
+</tr>
+<tr>
+<th>
+4498
+</th>
+<td>
+959cc9ab-52e9-4292-bb54-64da1f9c3a95
+</td>
+<td>
+3cba92be-8544-43a4-8ff3-dc8c5244fffd
+</td>
+<td>
+3d7a090c-d44f-4705-93af-0a07aa4d1fca
+</td>
+<td>
+2687.20
+</td>
+<td>
+07-10-2023
+</td>
+<td>
+eo150
+</td>
+<td>
+Wc232
+</td>
+<td>
+64
+</td>
+<td>
+M
+</td>
+<td>
+Neurology
+</td>
+<td>
+Denied
+</td>
+<td>
+138379.63
+</td>
+<td>
+Divorced
+</td>
+<td>
+Retired
+</td>
+<td>
+Port Jessica
+</td>
+<td>
+Emergency
+</td>
+<td>
+Paper
+</td>
+</tr>
+<tr>
+<th>
+4499
+</th>
+<td>
+f7681dee-6505-4b72-a578-3e86b7287a86
+</td>
+<td>
+5e29f1d8-2ca7-4d76-908d-24cbf6b41137
+</td>
+<td>
+95072963-a4e2-4c30-9961-59ecd6b33fbd
+</td>
+<td>
+4249.08
+</td>
+<td>
+26-07-2023
+</td>
+<td>
+DY251
+</td>
+<td>
+gn555
+</td>
+<td>
+43
+</td>
+<td>
+F
+</td>
+<td>
+Neurology
+</td>
+<td>
+Pending
+</td>
+<td>
+21927.92
+</td>
+<td>
+Divorced
+</td>
+<td>
+Employed
+</td>
+<td>
+New Kari
+</td>
+<td>
+Emergency
+</td>
+<td>
+Phone
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre><code>&lt;div class=&quot;colab-df-buttons&quot;&gt;</code></pre>
+<div class="colab-df-container">
+<pre><code>&lt;button class=&quot;colab-df-convert&quot; onclick=&quot;convertToInteractive(&#39;df-2492d63b-2ee9-43fc-a834-1cf2fc818913&#39;)&quot;
+        title=&quot;Convert this dataframe to an interactive table.&quot;
+        style=&quot;display:none;&quot;&gt;</code></pre>
+<p><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"> <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/> </svg> </button></p>
+<style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+<pre><code>&lt;script&gt;
+  const buttonEl =
+    document.querySelector(&#39;#df-2492d63b-2ee9-43fc-a834-1cf2fc818913 button.colab-df-convert&#39;);
+  buttonEl.style.display =
+    google.colab.kernel.accessAllowed ? &#39;block&#39; : &#39;none&#39;;
+
+  async function convertToInteractive(key) {
+    const element = document.querySelector(&#39;#df-2492d63b-2ee9-43fc-a834-1cf2fc818913&#39;);
+    const dataTable =
+      await google.colab.kernel.invokeFunction(&#39;convertToInteractive&#39;,
+                                                [key], {});
+    if (!dataTable) return;
+
+    const docLinkHtml = &#39;Like what you see? Visit the &#39; +
+      &#39;&lt;a target=&quot;_blank&quot; href=https://colab.research.google.com/notebooks/data_table.ipynb&gt;data table notebook&lt;/a&gt;&#39;
+      + &#39; to learn more about interactive tables.&#39;;
+    element.innerHTML = &#39;&#39;;
+    dataTable[&#39;output_type&#39;] = &#39;display_data&#39;;
+    await google.colab.output.renderOutput(dataTable, element);
+    const docLink = document.createElement(&#39;div&#39;);
+    docLink.innerHTML = docLinkHtml;
+    element.appendChild(docLink);
+  }
+&lt;/script&gt;</code></pre>
+</div>
+<pre><code>&lt;/div&gt;</code></pre>
+</div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>df.info()</span></code></pre></div>
+<pre><code>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+,RangeIndex: 4500 entries, 0 to 4499
+,Data columns (total 17 columns):
+, #   Column                   Non-Null Count  Dtype  
+,---  ------                   --------------  -----  
+, 0   ClaimID                  4500 non-null   object 
+, 1   PatientID                4500 non-null   object 
+, 2   ProviderID               4500 non-null   object 
+, 3   ClaimAmount              4500 non-null   float64
+, 4   ClaimDate                4500 non-null   object 
+, 5   DiagnosisCode            4500 non-null   object 
+, 6   ProcedureCode            4500 non-null   object 
+, 7   PatientAge               4500 non-null   int64  
+, 8   PatientGender            4500 non-null   object 
+, 9   ProviderSpecialty        4500 non-null   object 
+, 10  ClaimStatus              4500 non-null   object 
+, 11  PatientIncome            4500 non-null   float64
+, 12  PatientMaritalStatus     4500 non-null   object 
+, 13  PatientEmploymentStatus  4500 non-null   object 
+, 14  ProviderLocation         4500 non-null   object 
+, 15  ClaimType                4500 non-null   object 
+, 16  ClaimSubmissionMethod    4500 non-null   object 
+,dtypes: float64(2), int64(1), object(14)
+,memory usage: 597.8+ KB</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>df[<span class="st">&quot;ClaimDate&quot;</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">&quot;ClaimDate&quot;</span>], dayfirst<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a>df[<span class="st">&quot;month&quot;</span>] <span class="op">=</span> df[<span class="st">&quot;ClaimDate&quot;</span>].dt.to_period(<span class="st">&quot;M&quot;</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a>df[<span class="st">&quot;year&quot;</span>] <span class="op">=</span> df[<span class="st">&quot;ClaimDate&quot;</span>].dt.year</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a>monthly_freq <span class="op">=</span> df.groupby(<span class="st">&quot;month&quot;</span>)[<span class="st">&quot;ClaimID&quot;</span>].count()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a>monthly_freq <span class="op">=</span> df.groupby(<span class="st">&quot;month&quot;</span>)[<span class="st">&quot;ClaimID&quot;</span>].count()</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a>monthly_freq.plot(title<span class="op">=</span><span class="st">&quot;Monthly Claim Frequency Trend&quot;</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a>monthly_freq.plot(title<span class="op">=</span><span class="st">&quot;Monthly Claim Frequency Trend&quot;</span>)</span></code></pre></div>
+<pre><code>&lt;Axes: title={&#39;center&#39;: &#39;Monthly Claim Frequency Trend&#39;}, xlabel=&#39;month&#39;&gt;</code></pre>
+<figure>
+<img src="https://theonlineconverter.com/uploads/Health_clais2_1768730875_files/Health_clais2_1768730875_7_1.png" alt="" /><figcaption>png</figcaption>
+</figure>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a>sns.histplot(np.log1p(df[<span class="st">&quot;ClaimAmount&quot;</span>]), bins<span class="op">=</span><span class="dv">50</span>)</span></code></pre></div>
+<pre><code>&lt;Axes: xlabel=&#39;ClaimAmount&#39;, ylabel=&#39;Count&#39;&gt;</code></pre>
+<figure>
+<img src="https://theonlineconverter.com/uploads/Health_clais2_1768730875_files/Health_clais2_1768730875_8_1.png" alt="" /><figcaption>png</figcaption>
+</figure>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>monthly_severity <span class="op">=</span> df.groupby(<span class="st">&quot;month&quot;</span>)[<span class="st">&quot;ClaimAmount&quot;</span>].mean()</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>rolling_vol <span class="op">=</span> monthly_severity.rolling(<span class="dv">3</span>).std()</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a>monthly_severity <span class="op">=</span> df.groupby(<span class="st">&quot;month&quot;</span>)[<span class="st">&quot;ClaimAmount&quot;</span>].mean()</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a>rolling_vol <span class="op">=</span> monthly_severity.rolling(<span class="dv">3</span>).std()</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a>rolling_vol.plot(title<span class="op">=</span><span class="st">&quot;Monthly Severity Rolling Volatility&quot;</span>)</span></code></pre></div>
+<pre><code>&lt;Axes: title={&#39;center&#39;: &#39;Monthly Severity Rolling Volatility&#39;}, xlabel=&#39;month&#39;&gt;</code></pre>
+<figure>
+<img src="https://theonlineconverter.com/uploads/Health_clais2_1768730875_files/Health_clais2_1768730875_10_1.png" alt="" /><figcaption>png</figcaption>
+</figure>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a>threshold <span class="op">=</span> df[<span class="st">&quot;ClaimAmount&quot;</span>].quantile(<span class="fl">0.90</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true"></a>df[<span class="st">&quot;high_cost_flag&quot;</span>] <span class="op">=</span> (df[<span class="st">&quot;ClaimAmount&quot;</span>] <span class="op">&gt;</span> threshold).astype(<span class="bu">int</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a>features <span class="op">=</span> [</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a>    <span class="st">&quot;PatientAge&quot;</span>, <span class="st">&quot;PatientIncome&quot;</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a>    <span class="st">&quot;ClaimType&quot;</span>, <span class="st">&quot;ProviderSpecialty&quot;</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a>    <span class="st">&quot;ClaimSubmissionMethod&quot;</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true"></a>]</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true"></a>X <span class="op">=</span> pd.get_dummies(df[features], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true"></a>y <span class="op">=</span> df[<span class="st">&quot;high_cost_flag&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBClassifier</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>model <span class="op">=</span> XGBClassifier(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a>    n_estimators<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a>    max_depth<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a>    learning_rate<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true"></a>    subsample<span class="op">=</span><span class="fl">0.8</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true"></a>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true"></a>model.fit(X, y)</span></code></pre></div>
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style>
+<div id="sk-container-id-1" class="sk-top-container">
+<div class="sk-text-repr-fallback">
+<pre>XGBClassifier(base_score=None, booster=None, callbacks=None,
+              colsample_bylevel=None, colsample_bynode=None,
+              colsample_bytree=None, device=None, early_stopping_rounds=None,
+              enable_categorical=False, eval_metric=None, feature_types=None,
+              feature_weights=None, gamma=None, grow_policy=None,
+              importance_type=None, interaction_constraints=None,
+              learning_rate=0.05, max_bin=None, max_cat_threshold=None,
+              max_cat_to_onehot=None, max_delta_step=None, max_depth=5,
+              max_leaves=None, min_child_weight=None, missing=nan,
+              monotone_constraints=None, multi_strategy=None, n_estimators=300,
+              n_jobs=None, num_parallel_tree=None, ...)</pre>
+<b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b>
+</div>
+<div class="sk-container" hidden="">
+<div class="sk-item">
+<div class="sk-estimator fitted sk-toggleable">
+<input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow">
+<div>
+<div>
+XGBClassifier
+</div>
+</div>
+<div>
+<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://xgboost.readthedocs.io/en/release_3.1.0/python/python_api.html#xgboost.XGBClassifier">?<span>Documentation for XGBClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span>
+</div>
+</label>
+<div class="sk-toggleable__content fitted">
+<pre>XGBClassifier(base_score=None, booster=None, callbacks=None,
+              colsample_bylevel=None, colsample_bynode=None,
+              colsample_bytree=None, device=None, early_stopping_rounds=None,
+              enable_categorical=False, eval_metric=None, feature_types=None,
+              feature_weights=None, gamma=None, grow_policy=None,
+              importance_type=None, interaction_constraints=None,
+              learning_rate=0.05, max_bin=None, max_cat_threshold=None,
+              max_cat_to_onehot=None, max_delta_step=None, max_depth=5,
+              max_leaves=None, min_child_weight=None, missing=nan,
+              monotone_constraints=None, multi_strategy=None, n_estimators=300,
+              n_jobs=None, num_parallel_tree=None, ...)</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBRegressor</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a>y_sev <span class="op">=</span> df[<span class="st">&quot;ClaimAmount&quot;</span>]</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true"></a>reg <span class="op">=</span> XGBRegressor(</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true"></a>    n_estimators<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true"></a>    max_depth<span class="op">=</span><span class="dv">6</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true"></a>    learning_rate<span class="op">=</span><span class="fl">0.05</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true"></a>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true"></a>reg.fit(X, y_sev)</span></code></pre></div>
+<style>#sk-container-id-2 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-2 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-2 pre {
+  padding: 0;
+}
+
+#sk-container-id-2 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-2 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-2 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-2 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-2 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-2 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-2 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-2 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+#sk-container-id-2 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-2 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-2 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-2 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-2 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-2 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-2 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-2 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style>
+<div id="sk-container-id-2" class="sk-top-container">
+<div class="sk-text-repr-fallback">
+<pre>XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, device=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             feature_weights=None, gamma=None, grow_policy=None,
+             importance_type=None, interaction_constraints=None,
+             learning_rate=0.05, max_bin=None, max_cat_threshold=None,
+             max_cat_to_onehot=None, max_delta_step=None, max_depth=6,
+             max_leaves=None, min_child_weight=None, missing=nan,
+             monotone_constraints=None, multi_strategy=None, n_estimators=400,
+             n_jobs=None, num_parallel_tree=None, ...)</pre>
+<b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b>
+</div>
+<div class="sk-container" hidden="">
+<div class="sk-item">
+<div class="sk-estimator fitted sk-toggleable">
+<input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow">
+<div>
+<div>
+XGBRegressor
+</div>
+</div>
+<div>
+<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://xgboost.readthedocs.io/en/release_3.1.0/python/python_api.html#xgboost.XGBRegressor">?<span>Documentation for XGBRegressor</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span>
+</div>
+</label>
+<div class="sk-toggleable__content fitted">
+<pre>XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, device=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             feature_weights=None, gamma=None, grow_policy=None,
+             importance_type=None, interaction_constraints=None,
+             learning_rate=0.05, max_bin=None, max_cat_threshold=None,
+             max_cat_to_onehot=None, max_delta_step=None, max_depth=6,
+             max_leaves=None, min_child_weight=None, missing=nan,
+             monotone_constraints=None, multi_strategy=None, n_estimators=400,
+             n_jobs=None, num_parallel_tree=None, ...)</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a>monthly_loss <span class="op">=</span> df.groupby(<span class="st">&quot;month&quot;</span>)[<span class="st">&quot;ClaimAmount&quot;</span>].<span class="bu">sum</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Monthly Loss Trend:&quot;</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a><span class="bu">print</span>(monthly_loss)</span></code></pre></div>
+<pre><code>Monthly Loss Trend:
+,month
+,2022-07     627192.02
+,2022-08     912731.32
+,2022-09     877252.34
+,2022-10    1027010.54
+,2022-11     988598.28
+,2022-12     913328.52
+,2023-01     985937.96
+,2023-02     882716.36
+,2023-03     966353.28
+,2023-04     825358.72
+,2023-05    1058912.07
+,2023-06    1027691.54
+,2023-07     902524.58
+,2023-08     925573.49
+,2023-09    1109301.00
+,2023-10     953279.80
+,2023-11    1211698.70
+,2023-12     912508.94
+,2024-01     914794.80
+,2024-02     900895.77
+,2024-03     983363.20
+,2024-04     777130.95
+,2024-05     866045.29
+,2024-06     776151.48
+,2024-07     237566.45
+,Freq: M, Name: ClaimAmount, dtype: float64</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a><span class="im">import</span> shap</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true"></a>explainer <span class="op">=</span> shap.TreeExplainer(model)  <span class="co"># XGBClassifier or XGBRegressor</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true"></a>shap_values <span class="op">=</span> explainer.shap_values(X)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true"></a>shap.summary_plot(shap_values, X)</span></code></pre></div>
+<figure>
+<img src="https://theonlineconverter.com/uploads/Health_clais2_1768730875_files/Health_clais2_1768730875_17_0.png" alt="" /><figcaption>png</figcaption>
+</figure>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true"></a>freq_df <span class="op">=</span> df.groupby(<span class="st">&quot;month&quot;</span>).size().reset_index(name<span class="op">=</span><span class="st">&quot;claim_count&quot;</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true"></a>X_freq <span class="op">=</span> sm.add_constant(freq_df.index.values)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true"></a>y_freq <span class="op">=</span> freq_df[<span class="st">&quot;claim_count&quot;</span>]</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true"></a>poisson_model <span class="op">=</span> sm.GLM(</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true"></a>    y_freq, X_freq, family<span class="op">=</span>sm.families.Poisson()</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true"></a>).fit()</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true"></a>poisson_model.summary()</span></code></pre></div>
+<table class="simpletable">
+<caption>
+Generalized Linear Model Regression Results
+</caption>
+<tr>
+<th>
+Dep. Variable:
+</th>
+<pre><code>&lt;td&gt;claim_count&lt;/td&gt;   &lt;th&gt;  No. Observations:  &lt;/th&gt;  &lt;td&gt;    25&lt;/td&gt; </code></pre>
+</tr>
+<tr>
+<th>
+Model:
+</th>
+<pre><code>            &lt;td&gt;GLM&lt;/td&gt;       &lt;th&gt;  Df Residuals:      &lt;/th&gt;  &lt;td&gt;    23&lt;/td&gt; </code></pre>
+</tr>
+<tr>
+<th>
+Model Family:
+</th>
+<pre><code>   &lt;td&gt;Poisson&lt;/td&gt;     &lt;th&gt;  Df Model:          &lt;/th&gt;  &lt;td&gt;     1&lt;/td&gt; </code></pre>
+</tr>
+<tr>
+<th>
+Link Function:
+</th>
+<pre><code>    &lt;td&gt;Log&lt;/td&gt;       &lt;th&gt;  Scale:             &lt;/th&gt; &lt;td&gt;  1.0000&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Method:
+</th>
+<pre><code>          &lt;td&gt;IRLS&lt;/td&gt;       &lt;th&gt;  Log-Likelihood:    &lt;/th&gt; &lt;td&gt; -181.72&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Date:
+</th>
+<pre><code>      &lt;td&gt;Wed, 14 Jan 2026&lt;/td&gt; &lt;th&gt;  Deviance:          &lt;/th&gt; &lt;td&gt;  188.46&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Time:
+</th>
+<pre><code>          &lt;td&gt;17:28:15&lt;/td&gt;     &lt;th&gt;  Pearson chi2:      &lt;/th&gt;  &lt;td&gt;  148.&lt;/td&gt; </code></pre>
+</tr>
+<tr>
+<th>
+No. Iterations:
+</th>
+<pre><code>    &lt;td&gt;4&lt;/td&gt;        &lt;th&gt;  Pseudo R-squ. (CS):&lt;/th&gt;  &lt;td&gt;0.3867&lt;/td&gt; </code></pre>
+</tr>
+<tr>
+<th>
+Covariance Type:
+</th>
+<td>
+nonrobust
+</td>
+<th>
+</th>
+<td>
+</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+<td>
+</td>
+<th>
+coef
+</th>
+<th>
+std err
+</th>
+<th>
+z
+</th>
+<th>
+P&gt;|z|
+</th>
+<th>
+[0.025
+</th>
+<th>
+0.975]
+</th>
+</tr>
+<tr>
+<th>
+const
+</th>
+<td>
+5.2784
+</td>
+<td>
+0.028
+</td>
+<td>
+186.547
+</td>
+<td>
+0.000
+</td>
+<td>
+5.223
+</td>
+<td>
+5.334
+</td>
+</tr>
+<tr>
+<th>
+x1
+</th>
+<td>
+-0.0072
+</td>
+<td>
+0.002
+</td>
+<td>
+-3.495
+</td>
+<td>
+0.000
+</td>
+<td>
+-0.011
+</td>
+<td>
+-0.003
+</td>
+</tr>
+</table>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true"></a>X_numeric <span class="op">=</span> X.astype(<span class="bu">float</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true"></a>X_sev <span class="op">=</span> sm.add_constant(X_numeric)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true"></a>y_sev <span class="op">=</span> df[<span class="st">&quot;ClaimAmount&quot;</span>]</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true"></a>gamma_model <span class="op">=</span> sm.GLM(</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true"></a>    y_sev, X_sev,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true"></a>    family<span class="op">=</span>sm.families.Gamma(link<span class="op">=</span>sm.families.links.log())</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true"></a>).fit()</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true"></a>gamma_model.summary()</span></code></pre></div>
+<pre><code>/usr/local/lib/python3.12/dist-packages/statsmodels/genmod/families/links.py:13: FutureWarning: The log link alias is deprecated. Use Log instead. The log link alias will be removed after the 0.15.0 release.
+,  warnings.warn(</code></pre>
+<table class="simpletable">
+<caption>
+Generalized Linear Model Regression Results
+</caption>
+<tr>
+<th>
+Dep. Variable:
+</th>
+<pre><code>&lt;td&gt;ClaimAmount&lt;/td&gt;   &lt;th&gt;  No. Observations:  &lt;/th&gt;  &lt;td&gt;  4500&lt;/td&gt; </code></pre>
+</tr>
+<tr>
+<th>
+Model:
+</th>
+<pre><code>            &lt;td&gt;GLM&lt;/td&gt;       &lt;th&gt;  Df Residuals:      &lt;/th&gt;  &lt;td&gt;  4488&lt;/td&gt; </code></pre>
+</tr>
+<tr>
+<th>
+Model Family:
+</th>
+<pre><code>    &lt;td&gt;Gamma&lt;/td&gt;      &lt;th&gt;  Df Model:          &lt;/th&gt;  &lt;td&gt;    11&lt;/td&gt; </code></pre>
+</tr>
+<tr>
+<th>
+Link Function:
+</th>
+<pre><code>    &lt;td&gt;log&lt;/td&gt;       &lt;th&gt;  Scale:             &lt;/th&gt; &lt;td&gt; 0.32731&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Method:
+</th>
+<pre><code>          &lt;td&gt;IRLS&lt;/td&gt;       &lt;th&gt;  Log-Likelihood:    &lt;/th&gt; &lt;td&gt; -42636.&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Date:
+</th>
+<pre><code>      &lt;td&gt;Wed, 14 Jan 2026&lt;/td&gt; &lt;th&gt;  Deviance:          &lt;/th&gt; &lt;td&gt;  2484.1&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Time:
+</th>
+<pre><code>          &lt;td&gt;17:33:04&lt;/td&gt;     &lt;th&gt;  Pearson chi2:      &lt;/th&gt; &lt;td&gt;1.47e+03&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+No. Iterations:
+</th>
+<pre><code>    &lt;td&gt;9&lt;/td&gt;        &lt;th&gt;  Pseudo R-squ. (CS):&lt;/th&gt; &lt;td&gt;0.001715&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Covariance Type:
+</th>
+<td>
+nonrobust
+</td>
+<th>
+</th>
+<td>
+</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+<td>
+</td>
+<th>
+coef
+</th>
+<th>
+std err
+</th>
+<th>
+z
+</th>
+<th>
+P&gt;|z|
+</th>
+<th>
+[0.025
+</th>
+<th>
+0.975]
+</th>
+</tr>
+<tr>
+<th>
+const
+</th>
+<pre><code>                        &lt;td&gt;    8.4813&lt;/td&gt; &lt;td&gt;    0.036&lt;/td&gt; &lt;td&gt;  232.479&lt;/td&gt; &lt;td&gt; 0.000&lt;/td&gt; &lt;td&gt;    8.410&lt;/td&gt; &lt;td&gt;    8.553&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+PatientAge
+</th>
+<pre><code>                   &lt;td&gt;    0.0002&lt;/td&gt; &lt;td&gt;    0.000&lt;/td&gt; &lt;td&gt;    0.641&lt;/td&gt; &lt;td&gt; 0.521&lt;/td&gt; &lt;td&gt;   -0.000&lt;/td&gt; &lt;td&gt;    0.001&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+PatientIncome
+</th>
+<pre><code>                &lt;td&gt; 3.012e-07&lt;/td&gt; &lt;td&gt;  2.3e-07&lt;/td&gt; &lt;td&gt;    1.308&lt;/td&gt; &lt;td&gt; 0.191&lt;/td&gt; &lt;td&gt; -1.5e-07&lt;/td&gt; &lt;td&gt; 7.52e-07&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+ClaimType_Inpatient
+</th>
+<pre><code>          &lt;td&gt;   -0.0250&lt;/td&gt; &lt;td&gt;    0.024&lt;/td&gt; &lt;td&gt;   -1.024&lt;/td&gt; &lt;td&gt; 0.306&lt;/td&gt; &lt;td&gt;   -0.073&lt;/td&gt; &lt;td&gt;    0.023&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+ClaimType_Outpatient
+</th>
+<pre><code>         &lt;td&gt;    0.0006&lt;/td&gt; &lt;td&gt;    0.024&lt;/td&gt; &lt;td&gt;    0.023&lt;/td&gt; &lt;td&gt; 0.982&lt;/td&gt; &lt;td&gt;   -0.047&lt;/td&gt; &lt;td&gt;    0.048&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+ClaimType_Routine
+</th>
+<pre><code>            &lt;td&gt;   -0.0102&lt;/td&gt; &lt;td&gt;    0.024&lt;/td&gt; &lt;td&gt;   -0.419&lt;/td&gt; &lt;td&gt; 0.675&lt;/td&gt; &lt;td&gt;   -0.058&lt;/td&gt; &lt;td&gt;    0.037&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+ProviderSpecialty_General Practice
+</th>
+<td>
+-0.0074
+</td>
+<td>
+0.027
+</td>
+<td>
+-0.274
+</td>
+<td>
+0.784
+</td>
+<td>
+-0.061
+</td>
+<td>
+0.046
+</td>
+</tr>
+<tr>
+<th>
+ProviderSpecialty_Neurology
+</th>
+<pre><code>  &lt;td&gt;   -0.0078&lt;/td&gt; &lt;td&gt;    0.027&lt;/td&gt; &lt;td&gt;   -0.289&lt;/td&gt; &lt;td&gt; 0.773&lt;/td&gt; &lt;td&gt;   -0.061&lt;/td&gt; &lt;td&gt;    0.045&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+ProviderSpecialty_Orthopedics
+</th>
+<pre><code>&lt;td&gt;   -0.0151&lt;/td&gt; &lt;td&gt;    0.027&lt;/td&gt; &lt;td&gt;   -0.559&lt;/td&gt; &lt;td&gt; 0.576&lt;/td&gt; &lt;td&gt;   -0.068&lt;/td&gt; &lt;td&gt;    0.038&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+ProviderSpecialty_Pediatrics
+</th>
+<pre><code> &lt;td&gt;    0.0285&lt;/td&gt; &lt;td&gt;    0.027&lt;/td&gt; &lt;td&gt;    1.073&lt;/td&gt; &lt;td&gt; 0.283&lt;/td&gt; &lt;td&gt;   -0.024&lt;/td&gt; &lt;td&gt;    0.081&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+ClaimSubmissionMethod_Paper
+</th>
+<pre><code>  &lt;td&gt;    0.0219&lt;/td&gt; &lt;td&gt;    0.021&lt;/td&gt; &lt;td&gt;    1.046&lt;/td&gt; &lt;td&gt; 0.296&lt;/td&gt; &lt;td&gt;   -0.019&lt;/td&gt; &lt;td&gt;    0.063&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+ClaimSubmissionMethod_Phone
+</th>
+<pre><code>  &lt;td&gt;    0.0140&lt;/td&gt; &lt;td&gt;    0.021&lt;/td&gt; &lt;td&gt;    0.664&lt;/td&gt; &lt;td&gt; 0.507&lt;/td&gt; &lt;td&gt;   -0.027&lt;/td&gt; &lt;td&gt;    0.055&lt;/td&gt;</code></pre>
+</tr>
+</table>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true"></a>p99 <span class="op">=</span> df[<span class="st">&quot;ClaimAmount&quot;</span>].quantile(<span class="fl">0.99</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true"></a>p95 <span class="op">=</span> df[<span class="st">&quot;ClaimAmount&quot;</span>].quantile(<span class="fl">0.95</span>)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true"></a></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true"></a>p95, p99</span></code></pre></div>
+<pre><code>(np.float64(9510.307), np.float64(9900.619200000001))</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true"></a>cvar_99 <span class="op">=</span> df[df[<span class="st">&quot;ClaimAmount&quot;</span>] <span class="op">&gt;=</span> p99][<span class="st">&quot;ClaimAmount&quot;</span>].mean()</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true"></a>cvar_99</span></code></pre></div>
+<pre><code>np.float64(9947.837555555554)</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true"></a>stressed_loss <span class="op">=</span> monthly_loss.mean() <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> monthly_loss.std()</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true"></a>stressed_loss</span></code></pre></div>
+<pre><code>np.float64(1263229.6062892159)</code></pre>
+<p>Step 1: Frequency → Poisson / XGB</p>
+<p>Step 2: Severity → Gamma GLM / XGB</p>
+<p>Step 3: Explainability → SHAP</p>
+<p>Step 4: Tail Risk → VaR / CVaR (99%)</p>
+<p>Step 5: Capital → Stress Scenarios</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true"></a>u <span class="op">=</span> df[<span class="st">&quot;ClaimAmount&quot;</span>].quantile(<span class="fl">0.95</span>)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true"></a>excess <span class="op">=</span> df[df[<span class="st">&quot;ClaimAmount&quot;</span>] <span class="op">&gt;</span> u][<span class="st">&quot;ClaimAmount&quot;</span>] <span class="op">-</span> u</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true"></a><span class="im">from</span> scipy.stats <span class="im">import</span> genpareto</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true"></a></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true"></a>shape, loc, scale <span class="op">=</span> genpareto.fit(excess, floc<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true"></a>shape, scale</span></code></pre></div>
+<pre><code>(np.float64(-1.0351556026707633), np.float64(504.01001685117603))</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true"></a>p <span class="op">=</span> <span class="fl">0.995</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true"></a>n <span class="op">=</span> <span class="bu">len</span>(df)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true"></a>nu <span class="op">=</span> <span class="bu">len</span>(excess)</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true"></a></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true"></a>VaR_995 <span class="op">=</span> u <span class="op">+</span> (scale<span class="op">/</span>shape) <span class="op">*</span> ((n<span class="op">/</span>nu <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>p))<span class="op">**</span>(<span class="op">-</span>shape) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true"></a>VaR_995</span></code></pre></div>
+<pre><code>np.float64(9952.296734213118)</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true"></a><span class="im">import</span> pymc <span class="im">as</span> pm</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true"></a></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true"></a>claim_counts <span class="op">=</span> monthly_freq.values</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true"></a></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> model:</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true"></a>    alpha <span class="op">=</span> pm.Exponential(<span class="st">&quot;alpha&quot;</span>, <span class="fl">1.0</span>)</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true"></a>    beta <span class="op">=</span> pm.Exponential(<span class="st">&quot;beta&quot;</span>, <span class="fl">1.0</span>)</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true"></a></span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true"></a>    lam <span class="op">=</span> pm.Gamma(<span class="st">&quot;lambda&quot;</span>, alpha, beta)</span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true"></a>    obs <span class="op">=</span> pm.Poisson(<span class="st">&quot;obs&quot;</span>, lam, observed<span class="op">=</span>claim_counts)</span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true"></a></span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true"></a>    trace <span class="op">=</span> pm.sample(<span class="dv">2000</span>, tune<span class="op">=</span><span class="dv">1000</span>)</span></code></pre></div>
+<pre><code>Output()</code></pre>
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true"></a><span class="im">from</span> statsmodels.tsa.regime_switching.markov_regression <span class="im">import</span> MarkovRegression</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true"></a></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true"></a>model <span class="op">=</span> MarkovRegression(</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true"></a>    monthly_loss,</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true"></a>    k_regimes<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true"></a>    trend<span class="op">=</span><span class="st">&quot;c&quot;</span>,</span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true"></a>    switching_variance<span class="op">=</span><span class="va">False</span> <span class="co"># Changed to False to simplify the model</span></span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true"></a>)</span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true"></a></span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true"></a>res <span class="op">=</span> model.fit()</span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true"></a>res.summary()</span></code></pre></div>
+<table class="simpletable">
+<caption>
+Markov Switching Model Results
+</caption>
+<tr>
+<th>
+Dep. Variable:
+</th>
+<pre><code>&lt;td&gt;ClaimAmount&lt;/td&gt;   &lt;th&gt;  No. Observations:  &lt;/th&gt;    &lt;td&gt;25&lt;/td&gt;   </code></pre>
+</tr>
+<tr>
+<th>
+Model:
+</th>
+<pre><code>     &lt;td&gt;MarkovRegression&lt;/td&gt; &lt;th&gt;  Log Likelihood     &lt;/th&gt; &lt;td&gt;-330.570&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Date:
+</th>
+<pre><code>      &lt;td&gt;Wed, 14 Jan 2026&lt;/td&gt; &lt;th&gt;  AIC                &lt;/th&gt;  &lt;td&gt;671.140&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Time:
+</th>
+<pre><code>          &lt;td&gt;17:50:52&lt;/td&gt;     &lt;th&gt;  BIC                &lt;/th&gt;  &lt;td&gt;677.235&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+Sample:
+</th>
+<pre><code>       &lt;td&gt;07-31-2022&lt;/td&gt;    &lt;th&gt;  HQIC               &lt;/th&gt;  &lt;td&gt;672.831&lt;/td&gt;</code></pre>
+</tr>
+<tr>
+<th>
+</th>
+<pre><code>             &lt;td&gt;- 07-31-2024&lt;/td&gt;   &lt;th&gt;                     &lt;/th&gt;     &lt;td&gt; &lt;/td&gt;   </code></pre>
+</tr>
+<tr>
+<th>
+Covariance Type:
+</th>
+<pre><code>&lt;td&gt;approx&lt;/td&gt;      &lt;th&gt;                     &lt;/th&gt;     &lt;td&gt; &lt;/td&gt;   </code></pre>
+</tr>
+</table>
+<table class="simpletable">
+<caption>
+Regime 0 parameters
+</caption>
+<tr>
+<td>
+</td>
+<th>
+coef
+</th>
+<th>
+std err
+</th>
+<th>
+z
+</th>
+<th>
+P&gt;|z|
+</th>
+<th>
+[0.025
+</th>
+<th>
+0.975]
+</th>
+</tr>
+<tr>
+<th>
+const
+</th>
+<td>
+2.393e+05
+</td>
+<td>
+1.16e+05
+</td>
+<td>
+2.066
+</td>
+<td>
+0.039
+</td>
+<td>
+1.22e+04
+</td>
+<td>
+4.66e+05
+</td>
+</tr>
+</table>
+<table class="simpletable">
+<caption>
+Regime 1 parameters
+</caption>
+<tr>
+<td>
+</td>
+<th>
+coef
+</th>
+<th>
+std err
+</th>
+<th>
+z
+</th>
+<th>
+P&gt;|z|
+</th>
+<th>
+[0.025
+</th>
+<th>
+0.975]
+</th>
+</tr>
+<tr>
+<th>
+const
+</th>
+<td>
+9.303e+05
+</td>
+<td>
+2.31e+04
+</td>
+<td>
+40.245
+</td>
+<td>
+0.000
+</td>
+<td>
+8.85e+05
+</td>
+<td>
+9.76e+05
+</td>
+</tr>
+</table>
+<table class="simpletable">
+<caption>
+Non-switching parameters
+</caption>
+<tr>
+<td>
+</td>
+<th>
+coef
+</th>
+<th>
+std err
+</th>
+<th>
+z
+</th>
+<th>
+P&gt;|z|
+</th>
+<th>
+[0.025
+</th>
+<th>
+0.975]
+</th>
+</tr>
+<tr>
+<th>
+sigma2
+</th>
+<td>
+1.281e+10
+</td>
+<td>
+0.036
+</td>
+<td>
+3.51e+11
+</td>
+<td>
+0.000
+</td>
+<td>
+1.28e+10
+</td>
+<td>
+1.28e+10
+</td>
+</tr>
+</table>
+<table class="simpletable">
+<caption>
+Regime transition parameters
+</caption>
+<tr>
+<td>
+</td>
+<th>
+coef
+</th>
+<th>
+std err
+</th>
+<th>
+z
+</th>
+<th>
+P&gt;|z|
+</th>
+<th>
+[0.025
+</th>
+<th>
+0.975]
+</th>
+</tr>
+<tr>
+<th>
+p[0-&gt;0]
+</th>
+<td>
+2.443e-12
+</td>
+<td>
+nan
+</td>
+<td>
+nan
+</td>
+<td>
+nan
+</td>
+<td>
+nan
+</td>
+<td>
+nan
+</td>
+</tr>
+<tr>
+<th>
+p[1-&gt;0]
+</th>
+<td>
+0.0403
+</td>
+<td>
+0.040
+</td>
+<td>
+1.019
+</td>
+<td>
+0.308
+</td>
+<td>
+-0.037
+</td>
+<td>
+0.118
+</td>
+</tr>
+</table>
+<p><br/><br/>Warnings:<br/>[1] Covariance matrix calculated using numerical (complex-step) differentiation.<br/>[2] Covariance matrix is singular or near-singular, with condition number 4.91e+28. Standard errors may be unstable.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true"></a>regime_probs <span class="op">=</span> res.smoothed_marginal_probabilities[<span class="dv">1</span>]</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true"></a>regime_probs.plot(title<span class="op">=</span><span class="st">&quot;High-Volatility Claim Regime Probability&quot;</span>)</span></code></pre></div>
+<pre><code>&lt;Axes: title={&#39;center&#39;: &#39;High-Volatility Claim Regime Probability&#39;}, xlabel=&#39;month&#39;&gt;</code></pre>
+<figure>
+<img src="https://theonlineconverter.com/uploads/Health_clais2_1768730875_files/Health_clais2_1768730875_29_1.png" alt="" /><figcaption>png</figcaption>
+</figure>
+<div class="sourceCode" id="cb89"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
